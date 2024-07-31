@@ -131,7 +131,12 @@ jobs:
         if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "${{ env.CURSE_FILENAME }}.zip,release.json"
           tag: ${{ steps.make-tag.outputs.tag }}
-          latest: true
-          
+          name: ${{ steps.make-tag.outputs.tag }}
+          latest: true     
+          draft: false
+          prerelease: false
+          bodyFile: README.md
+          artifacts: "${{ env.CURSE_FILENAME }}.zip"
+          #,release.json"
+          artifactContentType: application/zip
