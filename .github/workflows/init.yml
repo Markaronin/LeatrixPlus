@@ -12,9 +12,9 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   # Triggers on a cron schedule that runs at 5 past every 2 hours.
   push:
-    branches: [ "main" ]
+    #branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    #branches: [ "main" ]
   #schedule:
    #     - cron: "5 */2 * * *"
 
