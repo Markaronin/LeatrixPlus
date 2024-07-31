@@ -58,7 +58,7 @@ jobs:
           curl -H 'Accept: application/json' \
             'https://www.curseforge.com/api/v1/mods/94855/files?pageIndex=0&pageSize=10&sort=dateCreated&sortDescending=true&removeAlphas=true' \
             -o curse-response.json
-          fileNameRaw=$(cat curse-response.json | jq -r '.data[1].fileName')
+          fileNameRaw=$(cat curse-response.json | jq -r '.data[0].fileName')
           fileNameFixed=${fileNameRaw%.*}
           echo "latest_curse_fileid=$(cat curse-response.json | jq -r '.data[1].id')" >> "$GITHUB_OUTPUT"
           echo "latest_curse_filename=${fileNameFixed}" >> "$GITHUB_OUTPUT"
@@ -93,9 +93,9 @@ jobs:
         run: |
           echo "New version detected! $CURSE_FILENAME"
           tmp=${CURSE_FILEID:4:3}
-          echo https://mediafilez.forgecdn.net/files/${CURSE_FILEID:1:4}/${tmp#${tmp%%[!0]*}}/${fileNameFixed}.zip
+          echo https://mediafilez.forgecdn.net/files/${CURSE_FILEID:0:4}/${tmp#${tmp%%[!0]*}}/${fileNameFixed}.zip
           # trim the leading 0s from the substring using ${tmp#${tmp%%[!0]*}}
-          curl -O https://mediafilez.forgecdn.net/files/${CURSE_FILEID:1:4}/${tmp#${tmp%%[!0]*}}/${CURSE_FILENAME}.zip
+          curl -O https://mediafilez.forgecdn.net/files/${CURSE_FILEID:0:4}/${tmp#${tmp%%[!0]*}}/${CURSE_FILENAME}.zip
       
       - name: Unzip Addon Package
         id: unzip_addon_pkg
