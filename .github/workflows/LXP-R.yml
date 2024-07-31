@@ -133,7 +133,7 @@ jobs:
         with:
           tag: ${{ steps.make-tag.outputs.tag }}
           name: ${{ steps.make-tag.outputs.tag }}
-          latest: true     
+          makeLatest: true     
           draft: false
           prerelease: false
           bodyFile: README.md
