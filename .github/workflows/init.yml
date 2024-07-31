@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      MY_FILENAME: ${{ steps.set-envvar-prev-release.outputs.prev-release-filename }}
+      #MY_FILENAME: ${{ steps.set-envvar-prev-release.outputs.prev-release-filename }}
       CURSE_FILENAME: ${{ steps.curl-curseforge.outputs.latest_curse_filename }}
       CURSE_FILEID: ${{ steps.curl-curseforge.outputs.latest_curse_fileid }}
         
