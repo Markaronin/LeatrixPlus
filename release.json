@@ -5,7 +5,6 @@
             "nolib": false,
             "metadata": [
                 {
-                    "flavor": "classic",
                     "interface": 110000
                 }
             ]
