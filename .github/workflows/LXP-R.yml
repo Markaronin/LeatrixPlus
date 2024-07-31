@@ -89,7 +89,7 @@ jobs:
     
       - name: Download Newer Version from Curse
         id: donwload-newer-version
-        if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
+        #if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
         run: |
           echo "New version detected! $CURSE_FILENAME"
           tmp=${CURSE_FILEID:4:3}
@@ -99,18 +99,18 @@ jobs:
       
       - name: Unzip Addon Package
         id: unzip_addon_pkg
-        if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
+        #if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
         run: unzip ${CURSE_FILENAME}.zip
 
       - name: Get Interface Version Number
         id: get_interface_version_num
-        if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
+        #if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
         run: |
           cd Leatrix_Plus/
           echo "get_interface_version_num=$(cat *.toc | sed -n -E -e 's/^## Interface: ([0-9]+).*/\1/p')" >> "$GITHUB_OUTPUT"
 
       - name: Update release.json
-        if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
+        #if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
         env:
           NEW_INTERFACE: ${{ steps.get_interface_version_num.outputs.get_interface_version_num }}
         run: |
@@ -121,14 +121,14 @@ jobs:
             && echo "${temp}" > release.json
 
       - name: Make Tag
-        if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
+        #if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
         id: make-tag
         run: |
           version=$(echo $CURSE_FILENAME | sed 's/.*-\(.*\)-.*/\1/')
           echo "tag=${version}" >> "$GITHUB_OUTPUT"
         
       - name: Make Release
-        if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
+        #if: ${{ env.MY_FILENAME != env.CURSE_FILENAME }}
         uses: ncipollo/release-action@v1
         with:
           artifacts: "${{ env.CURSE_FILENAME }}.zip,release.json"
