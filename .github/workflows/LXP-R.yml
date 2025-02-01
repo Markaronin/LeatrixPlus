@@ -58,7 +58,8 @@ jobs:
           curl -H 'Accept: application/json' \
             'https://www.curseforge.com/api/v1/mods/94855/files?pageIndex=0&pageSize=10&sort=dateCreated&sortDescending=true&removeAlphas=true' \
             -o curse-response.json
-          fileNameRaw=$(cat curse-response.json | jq -r '.data[0].fileName')
+          # 517 is the number curseforge uses to represent retail WoW. This jq command filters the versions of the addon to just the retail versions
+          fileNameRaw=$(cat curse-response.json | jq -r '.data | map(select(.gameVersionTypeIds | index(517))) | .[0].fileName')
           fileNameFixed=${fileNameRaw%.*}
           echo "latest_curse_fileid=$(cat curse-response.json | jq -r '.data[0].id')" >> "$GITHUB_OUTPUT"
           echo "latest_curse_filename=${fileNameFixed}" >> "$GITHUB_OUTPUT"
